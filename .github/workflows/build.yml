@@ -50,10 +50,10 @@ jobs:
       
     - name: Commit and push changes
       run: |
+         GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
          cd gitops-config
          git config --local user.email "action@github.com"
          git config --local user.name "GitHub Action"
-         git remote set-url origin https://x-access-token:${{secrets.GIT_OPS_ACCESS_TOKEN}}@github.com/ragoob/gitops-config.git
          git add .
          git commit -m "Update image tag to ${{steps.vars.outputs.short_sha}} in deployment file"
          git push
