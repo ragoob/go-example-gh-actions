@@ -49,8 +49,9 @@ jobs:
        cd gitops-config &&  sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
       
     - name: Commit and push changes
+      env:
+       GITHUB_TOKEN: ${{ secrets.GIT_OPS_ACCESS_TOKEN }}
       run: |
-         GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
          cd gitops-config
          git config --local user.email "action@github.com"
          git config --local user.name "GitHub Action"
