@@ -24,4 +24,4 @@ jobs:
         docker buildx create --use
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         docker buildx build --platform linux/amd64,linux/arm64 -t regoo707/sum-service:${{steps.vars.outputs.short_sha}} .
-        docker push rergoo707/regoo707/sum-service:${{steps.vars.outputs.short_sha}}
+        docker push regoo707/sum-service:${{steps.vars.outputs.short_sha}}
