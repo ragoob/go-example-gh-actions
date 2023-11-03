@@ -4,32 +4,32 @@ on:
     branches:
       - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Set short git commit SHA
-      id: vars
-      run: |
-        calculatedSha=$(git rev-parse --short ${{ github.sha }})
-        echo "::set-output name=short_sha::$calculatedSha"
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: build and push
-      uses: docker/build-push-action@v5
-      with:
-        push: true
-        tags: regoo707/sum-service:${{steps.vars.outputs.short_sha}}
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
+  #   - name: Set short git commit SHA
+  #     id: vars
+  #     run: |
+  #       calculatedSha=$(git rev-parse --short ${{ github.sha }})
+  #       echo "::set-output name=short_sha::$calculatedSha"
+  #   - name: Set up Docker Buildx
+  #     uses: docker/setup-buildx-action@v2
+  #   - name: Login to Docker Hub
+  #     uses: docker/login-action@v3
+  #     with:
+  #       username: ${{ secrets.DOCKER_USERNAME }}
+  #       password: ${{ secrets.DOCKER_PASSWORD }}
+  #   - name: build and push
+  #     uses: docker/build-push-action@v5
+  #     with:
+  #       push: true
+  #       tags: regoo707/sum-service:${{steps.vars.outputs.short_sha}}
 
   update-config:
     runs-on: ubuntu-latest
-    needs: build
+    #needs: build
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -46,8 +46,8 @@ jobs:
         path: config-repo
     - name: update-version
       run: |
-       cd config-repo 
-       ls
+       cd config-repo && ls
+       
       # sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
       
     
