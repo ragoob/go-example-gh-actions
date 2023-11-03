@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+	})
 	http.HandleFunc("/sum", func(w http.ResponseWriter, r *http.Request) {
 		s := fmt.Sprintf("%d", Sum(5, 10))
 		w.Write([]byte(s))
