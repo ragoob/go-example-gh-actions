@@ -1,9 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	http.HandleFunc("/sum", func(w http.ResponseWriter, r *http.Request) {
+		s := fmt.Sprintf("%d", Sum(5, 10))
+		w.Write([]byte(s))
+	})
+
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
 func Sum(a int, b int) int {
