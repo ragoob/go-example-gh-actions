@@ -45,6 +45,7 @@ jobs:
         path: gitops-config
     - name: update-version
       run: |
+       cd gitops-config
        sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
     
     - name: Commit and push changes
