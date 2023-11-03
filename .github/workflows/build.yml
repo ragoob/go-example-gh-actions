@@ -41,14 +41,13 @@ jobs:
     - name: Check out GitOps repository
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/ragoob/gitops-config.git
+        repository: ragoob/gitops-config.git
         ref: main
         path: gitops-config
     - name: update-version
       run: |
        cd gitops-config &&  sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
       
-    
     - name: Commit and push changes
       run: |
          cd gitops-config
