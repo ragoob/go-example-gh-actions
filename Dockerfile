@@ -1,6 +1,7 @@
-FROM golang:1.20-bullseye
+FROM golang:1.21-bullseye
 WORKDIR /app
 COPY go.mod ./
+RUN go mod download
 COPY *.go ./
 RUN go build -o /go-docker-demo
 EXPOSE 8080
