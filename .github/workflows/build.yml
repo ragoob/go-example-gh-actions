@@ -44,13 +44,12 @@ jobs:
         repository: ragoob/gitops-config.git
         ref: main
         path: gitops-config
+        token: ${{secrets.GIT_OPS_ACCESS_TOKEN}}
     - name: update-version
       run: |
        cd gitops-config &&  sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
       
     - name: Commit and push changes
-      env:
-       GITHUB_TOKEN: ${{ secrets.GIT_OPS_ACCESS_TOKEN }}
       run: |
          cd gitops-config
          git config --local user.email "action@github.com"
