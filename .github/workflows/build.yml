@@ -42,18 +42,22 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: ${{env.CONFIG_REPO}}
+        ref: main
+        path: config-repo
     - name: update-version
       run: |
-       cd gitops-config &&  sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
+       cd config-repo 
+       ls
+      # sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
       
     
-    - name: Commit and push changes
-      run: |
-         cd gitops-config
-         git config --local user.email "action@github.com"
-         git config --local user.name "GitHub Action"
-         git add .
-         git commit -m "Update image tag to ${{steps.vars.outputs.short_sha}} in deployment file"
-         git push
-      env:
-         GITHUB_TOKEN: ${{ secrets.GIT_OPS_ACCESS_TOKEN }}
+    # - name: Commit and push changes
+    #   run: |
+    #      cd config-repo
+    #      git config --local user.email "action@github.com"
+    #      git config --local user.name "GitHub Action"
+    #      git add .
+    #      git commit -m "Update image tag to ${{steps.vars.outputs.short_sha}} in deployment file"
+    #      git push
+    #   env:
+    #      GITHUB_TOKEN: ${{ secrets.GIT_OPS_ACCESS_TOKEN }}
