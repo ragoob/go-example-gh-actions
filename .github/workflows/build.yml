@@ -38,16 +38,20 @@ jobs:
       run: |
         calculatedSha=$(git rev-parse --short ${{ github.sha }})
         echo "::set-output name=short_sha::$calculatedSha"
-    
+    - name: Check out GitOps repository
+      uses: actions/checkout@v2
+      with:
+        repository: https://github.com/ragoob/gitops-config.git
+        ref: main
+        path: gitops-config
     - name: update-version
       run: |
-       git clone ${{env.CONFIG_REPO}} config-repo 
-       cd config-repo 
-       sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
+       cd gitops-config &&  sed -i "s|newTag: .*|newTag: ${{steps.vars.outputs.short_sha}}|" overlay/dev/kustomization.yaml
       
+    
     - name: Commit and push changes
       run: |
-         cd config-repo
+         cd gitops-config
          git config --local user.email "action@github.com"
          git config --local user.name "GitHub Action"
          git add .
