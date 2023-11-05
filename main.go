@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -15,6 +16,10 @@ func main() {
 		w.Write([]byte(s))
 	})
 
+	http.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(200 * time.Millisecond)
+		w.Write([]byte("Machine successfully shutdown"))
+	})
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
