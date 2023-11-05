@@ -19,7 +19,7 @@ jobs:
         script: |
           const response = await github.rest.pulls.get({
             owner: context.repo.owner,
-            repo: context.repo.repo
+            repo: context.repo.repo,
             pull_number: ${{github.event.inputs.pull_request_number}}
           });
 
